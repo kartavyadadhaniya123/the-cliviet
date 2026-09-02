@@ -1,0 +1,131 @@
+@import 'tailwindcss';
+
+@theme inline {
+  --font-serif: var(--font-cormorant), Georgia, serif;
+  --font-sans: var(--font-jost), system-ui, sans-serif;
+  --font-script: var(--font-pinyon), cursive;
+
+  --color-background: #f6f1e9;
+  --color-foreground: #2b2118;
+  --color-cream: #f6f1e9;
+  --color-ivory: #fbf8f2;
+  --color-espresso: #2b2118;
+  --color-espresso-deep: #1a130c;
+  --color-gold: #b08d35;
+  --color-gold-light: #d9bd7e;
+  --color-muted: #8a7a66;
+  --color-line: #e2d8c8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--color-espresso-deep);
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-cream);
+  color: var(--color-espresso);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+@media (max-width: 900px) {
+  body { cursor: auto; }
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-ivory);
+}
+
+/* Custom cursor */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  border-radius: 9999px;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+}
+.cursor-dot {
+  width: 7px;
+  height: 7px;
+  background: #d9bd7e;
+}
+.cursor-ring {
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(217, 189, 126, 0.7);
+  transition: width 0.3s ease, height 0.3s ease, background 0.3s ease;
+}
+.cursor-ring.hovering {
+  width: 64px;
+  height: 64px;
+  background: rgba(217, 189, 126, 0.12);
+}
+@media (max-width: 900px) {
+  .cursor-dot, .cursor-ring { display: none; }
+}
+
+/* Loader */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: var(--color-espresso-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.loader-mark {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  color: var(--color-gold-light);
+  letter-spacing: 0.35em;
+  padding-left: 0.35em;
+}
+.loader-bar {
+  width: 180px;
+  height: 1px;
+  background: rgba(217, 189, 126, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+.loader-bar span {
+  position: absolute;
+  inset: 0;
+  background: var(--color-gold-light);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+.reveal-line { overflow: hidden; display: block; }
+.reveal-line > span { display: inline-block; }
+
+.marquee-track {
+  display: inline-flex;
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee 28s linear infinite;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+  html { scroll-behavior: auto; }
+}
